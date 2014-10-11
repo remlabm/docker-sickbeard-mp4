@@ -68,6 +68,9 @@ RUN wget https://bootstrap.pypa.io/ez_setup.py -O - | python
 # Install Sick Beard
 RUN git clone git://github.com/midgetspy/Sick-Beard.git sickbeard
 
+# Install Couch Potato
+RUN git clone https://github.com/RuudBurger/CouchPotatoServer.git couch-potato
+
 ## MP4 Automator
 RUN git clone git://github.com/mdhiggins/sickbeard_mp4_automator.git mp4_automator
 COPY autoProcess.ini /work/mp4_automator/autoProcess.ini
@@ -77,7 +80,9 @@ RUN mkdir -p /var/log/supervisor
 COPY supervisord.conf /work/supervisord.conf
 
 EXPOSE 8081
-VOLUME ["/config", "/storage"]
+EXPOSE 5050
+
+VOLUME ["/config", "/storage", "/incoming"]
 
 CMD [ "-c", "/work/supervisord.conf"]
 ENTRYPOINT ["/usr/bin/supervisord"]
